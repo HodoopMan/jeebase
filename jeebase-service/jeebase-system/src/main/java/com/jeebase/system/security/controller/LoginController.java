@@ -51,7 +51,7 @@ import java.util.Random;
 @RequestMapping("/auth")
 @Api(value = "LoginController|登录鉴权相关的前端控制器")
 public class LoginController {
-    
+
     @Autowired
     private JwtComponent jwtComponent;
 
@@ -97,11 +97,11 @@ public class LoginController {
     public Result<String> login(@RequestBody LoginUser loginUser, HttpServletRequest request) throws Exception {
         String userAccount = loginUser.getUserAccount();
         String userPassword = loginUser.getUserPassword();
-//        String vcode = loginUser.getVcode();
-//        String verkey = loginUser.getVerkey();
-//        if (!CaptchaUtil.isVerified(verkey, vcode, request)) {
-//            return new Result<String>().error(ResponseConstant.INVALID_RE_VCODE);
-//        }
+        String vcode = loginUser.getVcode();
+        String verkey = loginUser.getVerkey();
+        if (!CaptchaUtil.isVerified(verkey, vcode, request)) {
+            return new Result<String>().error(ResponseConstant.INVALID_RE_VCODE);
+        }
         if (StringUtils.isEmpty(userAccount) || StringUtils.isEmpty(userPassword)) {
             return new Result<String>().error(ResponseConstant.PARAM_ERROR);
         }
@@ -116,24 +116,24 @@ public class LoginController {
         return new Result<String>().success().put(token);
     }
 
-//    public static void main(String[] args) {
-//        // Hash a password for the first time
-//        String password = "admin12345678";
-//        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-//        System.out.println(hashed);
-//        // gensalt's log_rounds parameter determines the complexity
-//        // the work factor is 2**log_rounds, and the default is 10
-//        String hashed2 = BCrypt.hashpw(password, BCrypt.gensalt(12));
-//
-//        // Check that an unencrypted password matches one that has
-//        // previously been hashed
-//        String candidate = "testpassword";
-//        //String candidate = "wrongtestpassword";
-//        if (BCrypt.checkpw(candidate, hashed))
-//            System.out.println("It matches");
-//        else
-//            System.out.println("It does not match");
-//    }
+    public static void main(String[] args) {
+        // Hash a password for the first time
+        String password = "manager12345678";
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        System.out.println(hashed);
+        // gensalt's log_rounds parameter determines the complexity
+        // the work factor is 2**log_rounds, and the default is 10
+        String hashed2 = BCrypt.hashpw(password, BCrypt.gensalt(12));
+
+        // Check that an unencrypted password matches one that has
+        // previously been hashed
+        String candidate = "testpassword";
+        //String candidate = "wrongtestpassword";
+        if (BCrypt.checkpw(candidate, hashed))
+            System.out.println("It matches");
+        else
+            System.out.println("It does not match");
+    }
 
     /**
      * 获取登录后的用户信息
@@ -163,7 +163,7 @@ public class LoginController {
         userInfo.setStringResources(resourceStringList);
         return new Result<UserInfo>().success().put(userInfo);
     }
-    
+
     /**
      * 刷新token
      */

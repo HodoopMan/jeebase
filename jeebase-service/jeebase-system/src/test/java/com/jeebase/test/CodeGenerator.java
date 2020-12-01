@@ -69,13 +69,13 @@ public class CodeGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("lh445566");
         dsc.setUrl(
                 "jdbc:mysql://127.0.0.1:3306/jeebase?useUnicode=true&characterEncoding=utf8");
         mpg.setDataSource(dsc);
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("member");// 模块名
+        pc.setModuleName("account");// 模块名
         pc.setParent("com.jeebase.wechat");
         mpg.setPackageInfo(pc);
         // 自定义配置
@@ -108,7 +108,7 @@ public class CodeGenerator {
         // strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        strategy.setInclude("t_sys_wechat_member");// 表名
+        strategy.setInclude("t_sys_account");// 表名
         // strategy.setSuperEntityColumns("id");
         // strategy.setControllerMappingHyphenStyle(true);
         // strategy.setTablePrefix(pc.getModuleName() + "_");

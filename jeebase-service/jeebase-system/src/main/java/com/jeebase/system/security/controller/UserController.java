@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.mindrot.jbcrypt.BCrypt;
@@ -51,7 +52,7 @@ public class UserController {
      * 查询所有用户
      */
     @GetMapping("/list")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "查询用户列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", required = false, dataType = "String", paramType = "query"),
@@ -71,7 +72,7 @@ public class UserController {
      * 添加用户
      */
     @PostMapping("/create")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "添加用户")
     @AroundLog(name = "添加用户")
     public Result<?> create(@RequestBody @Valid CreateUser user) {
@@ -87,7 +88,7 @@ public class UserController {
      * 修改用户
      */
     @PostMapping("/update")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "更新用户信息")
     @AroundLog(name = "更新用户信息")
     public Result<?> update(@RequestBody UpdateUser user) {
@@ -169,7 +170,8 @@ public class UserController {
     /**
      * 重置密码
      */
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
+//    @RequiresPermissions(value={"add","update"},logical = Logical.AND)
     @PostMapping("password/{userId}")
     @ApiOperation(value = "管理员重置用户密码")
     @AroundLog(name = "管理员重置用户密码")
@@ -193,7 +195,7 @@ public class UserController {
      * 修改用户状态
      */
     @PostMapping("/status/{userId}/{status}")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "管理员修改用户状态")
     @AroundLog(name = "管理员修改用户状态")
     @ApiImplicitParams({
@@ -239,7 +241,7 @@ public class UserController {
      * 修改用户
      */
     @PostMapping("/update/data/permission")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "更新用户数据权限")
     @AroundLog(name = "更新用户数据权限")
     public Result<?> updateUserDataPermission(@RequestBody UpdateDataPermission updateDataPermission) {
@@ -252,7 +254,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/account/check")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "校验用户账号是否存在", notes = "校验用户账号是否存在")
     public Result<Boolean> checkUserAccount(CreateUser user) {
         String userAccount = user.getUserAccount();
@@ -271,7 +273,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/nickname/check")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "校验用户昵称是否存在", notes = "校验用户昵称是否存在")
     public Result<Boolean> checkUserNickname(CreateUser user) {
         String userNickName = user.getUserNickName();
@@ -289,7 +291,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/mobile/check")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "校验用户手机号是否存在", notes = "校验用户手机号是否存在")
     public Result<Boolean> checkUserMobile(CreateUser user) {
         String userMobile = user.getUserMobile();
@@ -307,7 +309,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/email/check")
-    @RequiresRoles("SYSADMIN")
+    @RequiresRoles(value={"SYSADMIN","BUSINESS_ADMIN"},logical = Logical.OR)
     @ApiOperation(value = "校验用户电子邮箱是否存在", notes = "校验用户电子邮箱是否存在")
     public Result<Boolean> checkUserEmail(CreateUser user) {
         String userEmail = user.getUserEmail();
