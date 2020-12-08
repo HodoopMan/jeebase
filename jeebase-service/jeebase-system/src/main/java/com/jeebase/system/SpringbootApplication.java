@@ -28,6 +28,8 @@ public class SpringbootApplication extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) {
+
         SpringApplication.run(SpringbootApplication.class, args);
+
     }
 }
