@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jeebase</groupId>
 	<artifactId>jeebase-system</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>0.0.1</version>
 	<name>jeebase-system</name>
 	<url>http://maven.apache.org</url>
@@ -30,6 +30,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!-- 打包时不带上，只用于本地编译、测试、运行 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		<dependency>
@@ -39,6 +45,29 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 排除内嵌tomcat依赖 -->
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId><!--tomcat依赖 内置tomcat-->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope><!--SpringBoot内置tomcat默认不支持JSP。故在用内置tomcat时为了支持JSP需引入此依赖。  外置tomcat有此jar，故不需要再引入此依赖，此时加上provided参数即可，否则jar冲突-->
+		</dependency>
+		<!-- 添加servlet-api的依赖,用来打war包  -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
